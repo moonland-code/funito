@@ -64,8 +64,12 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        <Button size="sm">ثبت نام</Button>
-        <Button size="sm">ورود</Button>
+        <Link href="/Register">
+              <Button size="sm">ثبت نام</Button>
+        </Link>
+        <Link href="/Login">
+              <Button size="sm">ورود</Button>
+        </Link>
         <NavbarItem className="hidden md:flex">
 
         </NavbarItem>
@@ -73,6 +77,12 @@ export const Navbar = () => {
 
       {/* منوی موبایل */}
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <Link href="/Register">
+              <Button size="sm">ثبت نام</Button>
+        </Link>
+        <Link href="/Login">
+              <Button size="sm">ورود</Button>
+        </Link>
 
         <ThemeSwitch />
         <NavbarMenuToggle />
@@ -80,6 +90,7 @@ export const Navbar = () => {
 
       {/* آیتم‌های داخل منوی همبرگری برای موبایل */}
       <NavbarMenu>
+        
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item.href}-${index}`}>
