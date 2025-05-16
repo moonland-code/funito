@@ -12,7 +12,7 @@ export default function IndexPage() {
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg text-center justify-center">
           <span className={title()}>فانیتو،&nbsp;</span>
-          <span className={title({ color: "violet" })}>سرگرمی‌ای&nbsp;</span>
+          <span className={title({ color: "violet" })}>سرگرمی‌&nbsp;</span>
           <br />
           <span className={title()}>
           !برای همه‌ی لحظه‌هات
@@ -37,7 +37,28 @@ export default function IndexPage() {
 
         </div>
 
-
+          <Link
+            
+            className={buttonStyles({
+              color: "primary",
+              radius: "full",
+              variant: "shadow",
+            })}
+            href={'./Register'}
+          >
+            ثبت نام
+          </Link>
+                    <Link
+            
+            className={buttonStyles({
+              color: "primary",
+              radius: "full",
+              variant: "shadow",
+            })}
+            href={'./Login'}
+          >
+            ورود
+          </Link>
       </section>
     </DefaultLayout>
   );

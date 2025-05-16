@@ -1,4 +1,5 @@
 import { Link } from "@heroui/link";
+import {Button, ButtonGroup} from "@heroui/button";
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -18,10 +19,11 @@ import {
   
 } from "@/components/icons";
 import { Logo } from "@/components/icons";
-
 export const Navbar = () => {
   return (
+    
     <HeroUINavbar maxWidth="xl" position="sticky">
+      
       {/* لوگو و آیتم‌های nav */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
@@ -62,7 +64,8 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-
+        <Button size="sm">ثبت نام</Button>
+        <Button size="sm">ورود</Button>
         <NavbarItem className="hidden md:flex">
 
         </NavbarItem>
@@ -106,6 +109,7 @@ export const Navbar = () => {
               >
                 {item.label}
               </Link>
+              
             </NavbarMenuItem>
           ))}
         </div>

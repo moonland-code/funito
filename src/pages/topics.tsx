@@ -5,21 +5,23 @@ import DefaultLayout from "@/layouts/default";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+// موضوعات
 const topics = [
   {
     title: "معما",
-    link: "/topics/frontend",
+    link: "/Puzzel",
   },
   {
     title: "جوک",
-    link: "/topics/backend",
+    link: "/joke",
   },
   {
     title: "سرگرمی",
-    link: "/topics/devops",
+    link: "/Entertainment",
   },
 ];
 
+// تابع تولید تصویر با متن روی بوم (Canvas)
 function generateImageWithText(text) {
   const canvas = document.createElement("canvas");
   canvas.width = 270;
@@ -43,18 +45,30 @@ export default function Topics() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    const generated = topics.map((t) => ({
-      ...t,
-      image: generateImageWithText(t.title),
-    }));
-    setImages(generated);
+    // صبر کن تا فونت Vazir کاملاً لود شود
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        const generated = topics.map((t) => ({
+          ...t,
+          image: generateImageWithText(t.title),
+        }));
+        setImages(generated);
+      });
+    } else {
+      // اگر document.fonts پشتیبانی نمی‌شود
+      const generated = topics.map((t) => ({
+        ...t,
+        image: generateImageWithText(t.title),
+      }));
+      setImages(generated);
+    }
   }, []);
 
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg text-center justify-center">
-          <span className={title({ color: "yellow" })}>موضوعات&nbsp;</span>
+          <span className={title({ color: "blue" })}>موضوعات&nbsp;</span>
         </div>
       </section>
 

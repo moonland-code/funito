@@ -41,12 +41,6 @@ export const Footer = () => {
 
         {/* Right section: Social icons */}
         <div className="flex items-center gap-4">
-          <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500 hover:text-primary" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500 hover:text-primary" />
-          </Link>
           <Link isExternal href={siteConfig.links.github} title="GitHub">
             <GithubIcon className="text-default-500 hover:text-primary" />
           </Link>
