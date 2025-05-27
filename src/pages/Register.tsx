@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {Input} from "@heroui/input";
+import { Button } from "@heroui/button";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -45,18 +47,19 @@ export default function Register() {
   return (
     <form
       onSubmit={handleRegister}
-      className="flex flex-col gap-4 max-w-sm mx-auto mt-20 p-6 border rounded shadow"
+      className="flex flex-col gap-4 max-w-sm mx-auto mt-20 p-6  rounded shadow"
     >
-      <input
-        className="border p-2 rounded"
+          
+      <Input  
+        className=" p-2 rounded"
         placeholder="نام کاربری"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         autoComplete="username"
-        required
-      />
-      <input
-        className="border p-2 rounded"
+        required />
+    
+      <Input  
+        className="p-2 rounded"
         type="password"
         placeholder="رمز عبور"
         value={password}
@@ -64,12 +67,13 @@ export default function Register() {
         autoComplete="new-password"
         required
       />
-      <button
-        type="submit"
-        className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
-      >
-        ثبت‌نام
-      </button>
+      
+      <Button color="success" type="submit">
+      ثبت نام
+      </Button>
+     
+
+
     </form>
   );
 }
