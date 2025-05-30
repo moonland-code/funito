@@ -1,130 +1,86 @@
-import { Link } from "@heroui/link";
-import {Button, ButtonGroup} from "@heroui/button";
+import React from "react";
 import {
-  Navbar as HeroUINavbar,
+  Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@heroui/navbar";
-import { link as linkStyles } from "@heroui/theme";
-import clsx from "clsx";
+import { Button } from "@heroui/button";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
+// لوگوی ساده
+const AcmeLogo = () => (
+  <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+    <path
+      clipRule="evenodd"
+      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+      fill="currentColor"
+      fillRule="evenodd"
+    />
+  </svg>
+);
 
-  
-} from "@/components/icons";
-import { Logo } from "@/components/icons";
-export const Navbar = () => {
+const NavbarComponent = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
-    
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      
-      {/* لوگو و آیتم‌های nav */}
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand className="gap-3 max-w-fit">
-          <Link
-            className="flex justify-start items-center gap-1"
-            color="foreground"
-            href="/"
-          >
-            <Logo />
-            <p className="font-bold text-inherit">Funito</p>
-          </Link>
-        </NavbarBrand>
+    <Navbar>
+      <NavbarBrand>
+        <AcmeLogo />
+        <p className="font-bold text-inherit mr-2">فانیتو</p>
+      </NavbarBrand>
 
-        {/* نمایش nav items در sm و بالاتر */}
-        <div className="hidden sm:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <Link
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </Link>
+      <NavbarContent justify="center" className="gap-6">
+        <NavbarItem>
+          <Link to="/">خانه</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link to="/topics">موضوعات</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link to="/about">درباره ما</Link>
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarContent justify="end" className="gap-4">
+        {user ? (
+          <>
+              <NavbarItem className="text-gray-700">
+                سلام، {user.username}
+              </NavbarItem>
+              <NavbarItem>
+                <Button onClick={handleLogout} color="danger" variant="flat" style={{ marginRight: '10px' }}>
+                  خروج
+                </Button>
+
+                <Button as={Link} to="/dashboard" color="success" variant="flat">
+                  داشبورد
+                </Button>   
+              </NavbarItem>
+
+          </>
+        ) : (
+          <>
+            <NavbarItem>
+              <Link to="/login">ورود</Link>
             </NavbarItem>
-          ))}
-        </div>
+            <NavbarItem>
+              <Button as={Link} to="/register" color="primary" variant="flat">
+                ثبت‌نام
+              </Button>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
-
-      {/* تم و آیکون‌ها در دسکتاپ */}
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <ThemeSwitch />
-        </NavbarItem>
-        <Link href="/Register">
-              <Button size="sm">ثبت نام</Button>
-        </Link>
-        <Link href="/Login">
-              <Button size="sm">ورود</Button>
-        </Link>
-        <NavbarItem className="hidden md:flex">
-
-        </NavbarItem>
-      </NavbarContent>
-
-      {/* منوی موبایل */}
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link href="/Register">
-              <Button size="sm">ثبت نام</Button>
-        </Link>
-        <Link href="/Login">
-              <Button size="sm">ورود</Button>
-        </Link>
-
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      {/* آیتم‌های داخل منوی همبرگری برای موبایل */}
-      <NavbarMenu>
-        
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.href}-${index}`}>
-              <Link
-                color="foreground"
-                href={item.href}
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-
-          {/* آیتم‌های اضافی از navMenuItems (مثلاً logout یا special pages) */}
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.href}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                    ? "danger"
-                    : "foreground"
-                }
-                href={item.href}
-                size="lg"
-              >
-                {item.label}
-              </Link>
-              
-            </NavbarMenuItem>
-          ))}
-        </div>
-      </NavbarMenu>
-    </HeroUINavbar>
+    </Navbar>
   );
 };
+
+export default NavbarComponent;

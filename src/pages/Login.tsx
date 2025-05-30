@@ -1,33 +1,70 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Input } from '@heroui/input';
-import { Button } from '@heroui/button';
-export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
+import { Alert } from "@heroui/alert";
+import { useAuth } from "@/contexts/AuthContext";
 
-  const handleLogin = async (e: any) => {
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch('http://localhost/backend/login.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      navigate('/dashboard');
-    } else {
-      alert(data.error);
+    setError("");
+
+    try {
+      const res = await fetch("http://localhost/backend/login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success && data.user) {
+        login(data.user);
+        navigate("/dashboard");
+      } else {
+        setError(data.error || "خطایی رخ داد");
+      }
+    } catch (err) {
+      setError("خطا در ارتباط با سرور");
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className="flex flex-col gap-4 max-w-sm mx-auto mt-20">
-       <Input className=" p-2" placeholder="نام کاربری" value={username} onChange={(e) => setUsername(e.target.value)}/>
-       <Input className=" p-2" type="password" placeholder="رمز عبور" value={password} onChange={(e) => setPassword(e.target.value)}/>
-             <Button color="success" type="submit">ورود</Button>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col gap-6 w-full max-w-sm bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20"
+      >
+        <h2 className="text-2xl font-bold text-center text-white">ورود</h2>
 
-    </form>
+        {error && <Alert color="danger" title={error} />}
+
+        <Input
+          label="نام کاربری"
+          placeholder="نام کاربری"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <Input
+          label="رمز عبور"
+          type="password"
+          placeholder="رمز عبور"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Button color="success" type="submit">
+          ورود
+        </Button>
+      </form>
+    </div>
   );
 }

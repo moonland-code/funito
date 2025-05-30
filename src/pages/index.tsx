@@ -37,28 +37,6 @@ export default function IndexPage() {
 
         </div>
 
-          <Link
-            
-            className={buttonStyles({
-              color: "primary",
-              radius: "full",
-              variant: "shadow",
-            })}
-            href={'./Register'}
-          >
-            ثبت نام
-          </Link>
-                    <Link
-            
-            className={buttonStyles({
-              color: "primary",
-              radius: "full",
-              variant: "shadow",
-            })}
-            href={'./Login'}
-          >
-            ورود
-          </Link>
       </section>
     </DefaultLayout>
   );

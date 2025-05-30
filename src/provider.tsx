@@ -1,20 +1,14 @@
-import type { NavigateOptions } from "react-router-dom";
-
+// src/provider.tsx
+import React from "react";
 import { HeroUIProvider } from "@heroui/system";
-import { useHref, useNavigate } from "react-router-dom";
-
-declare module "@react-types/shared" {
-  interface RouterConfig {
-    routerOptions: NavigateOptions;
-  }
-}
+import { AuthProvider } from "./contexts/AuthContext"; // مسیر درست context
 
 export function Provider({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
-
   return (
-    <HeroUIProvider navigate={navigate} useHref={useHref}>
-      {children}
+    <HeroUIProvider>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
     </HeroUIProvider>
   );
 }
