@@ -37,34 +37,38 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black">
-      <form
-        onSubmit={handleLogin}
-        className="flex flex-col gap-6 w-full max-w-sm bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20"
-      >
-        <h2 className="text-2xl font-bold text-center text-white">ورود</h2>
+<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-300 to-blue-100 dark:from-gray-800 dark:to-black transition-colors duration-500">
+  <form
+    onSubmit={handleLogin}
+    className="flex flex-col gap-6 w-full max-w-sm bg-white/80 dark:bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-blue-200 dark:border-white/20"
+  >
+    <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+      ورود
+    </h2>
 
-        {error && <Alert color="danger" title={error} />}
+    {error && <Alert color="danger" title={error} />}
 
-        <Input
-          label="نام کاربری"
-          placeholder="نام کاربری"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <Input
-          label="رمز عبور"
-          type="password"
-          placeholder="رمز عبور"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Button color="success" type="submit">
-          ورود
-        </Button>
-      </form>
-    </div>
+    <Input
+      label="نام کاربری"
+      placeholder="نام کاربری"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      required
+    />
+    <Input
+      label="رمز عبور"
+      type="password"
+      placeholder="رمز عبور"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    <Button color="success" type="submit">
+      ورود
+    </Button>
+  </form>
+</div>
+
+
   );
 }

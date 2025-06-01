@@ -106,7 +106,7 @@ const NavbarComponent = () => {
                     <p className="font-semibold">ورود با</p>
                     <p className="font-semibold">{user.username}</p>
                   </DropdownItem>
-                  <DropdownItem key="dashboard" as={Link} to="/dashboard">
+                  <DropdownItem key="dashboard" color="success" as={Link} to="/dashboard">
                     داشبورد
                   </DropdownItem>
                   <DropdownItem key="logout" color="danger" onClick={handleLogout}>
