@@ -1,14 +1,15 @@
-// src/provider.tsx
-import React from "react";
-import { HeroUIProvider } from "@heroui/system";
-import { AuthProvider } from "./contexts/AuthContext"; // مسیر درست context
+// app/providers.tsx
+"use client";
 
-export function Provider({ children }: { children: React.ReactNode }) {
+import { HeroUIProvider } from "@heroui/system";
+import {ThemeProvider as NextThemesProvider} from "next-themes";
+
+export function Providers({children}: { children: React.ReactNode }) {
   return (
     <HeroUIProvider>
-      <AuthProvider>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
         {children}
-      </AuthProvider>
+      </NextThemesProvider>
     </HeroUIProvider>
-  );
+  )
 }

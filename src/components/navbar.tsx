@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -8,8 +8,38 @@ import {
 import { Button } from "@heroui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@heroui/dropdown";
+import { Avatar } from "@heroui/avatar";
+import { useTheme } from "next-themes";
+import { SunIcon, MoonIcon } from "./ThemeIcons"; // آیکون‌ها را جدا کن یا از کد قبلی استفاده کن
 
-// لوگوی ساده
+const ThemeSwitcher = () => {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <Button
+      isIconOnly
+      variant="light"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      className="text-xl"
+    >
+      {theme === "light" ? <MoonIcon /> : <SunIcon />}
+    </Button>
+  );
+};
+
 const AcmeLogo = () => (
   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
     <path
@@ -31,7 +61,7 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Navbar>
+    <Navbar maxWidth="full" isBordered>
       <NavbarBrand>
         <AcmeLogo />
         <p className="font-bold text-inherit mr-2">فانیتو</p>
@@ -50,21 +80,41 @@ const NavbarComponent = () => {
       </NavbarContent>
 
       <NavbarContent justify="end" className="gap-4">
+        <NavbarItem>
+          <ThemeSwitcher />
+        </NavbarItem>
+
         {user ? (
           <>
-              <NavbarItem className="text-gray-700">
-                سلام، {user.username}
-              </NavbarItem>
-              <NavbarItem>
-                <Button onClick={handleLogout} color="danger" variant="flat" style={{ marginRight: '10px' }}>
-                  خروج
-                </Button>
-
-                <Button as={Link} to="/dashboard" color="success" variant="flat">
-                  داشبورد
-                </Button>   
-              </NavbarItem>
-
+        <NavbarItem className="text-black dark:text-white">
+          سلام، {user.username}
+        </NavbarItem>
+            <NavbarItem>
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    classNames={{
+                      base: "bg-gradient-to-br from-[#FFB457] to-[#FF705B]",
+                      icon: "text-black/80",
+                    }}
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">ورود با</p>
+                    <p className="font-semibold">{user.username}</p>
+                  </DropdownItem>
+                  <DropdownItem key="dashboard" as={Link} to="/dashboard">
+                    داشبورد
+                  </DropdownItem>
+                  <DropdownItem key="logout" color="danger" onClick={handleLogout}>
+                    خروج
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
           </>
         ) : (
           <>
