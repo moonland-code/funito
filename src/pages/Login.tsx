@@ -17,7 +17,7 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost/backend/login.php", {
+      const res = await fetch("http://localhost/backend-funito/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

@@ -15,7 +15,7 @@ export default function Register() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost/backend/signup.php", {
+      const res = await fetch("http://localhost/backend-funito/signup.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
